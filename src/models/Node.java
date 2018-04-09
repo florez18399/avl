@@ -1,4 +1,4 @@
-package avl;
+package models;
 
 public class Node {
 	private int info;
@@ -6,7 +6,6 @@ public class Node {
 	private Node right;
 
 	public Node(int info) {
-		super();
 		this.info = info;
 	}
 
@@ -14,6 +13,21 @@ public class Node {
 		this.info = info;
 		this.left = left;
 		this.right = right;
+	}
+
+	/**
+	 * @return the info
+	 */
+	public int getInfo() {
+		return info;
+	}
+
+	/**
+	 * @param info
+	 *            the info to set
+	 */
+	public void setInfo(int info) {
+		this.info = info;
 	}
 
 	/**
