@@ -11,11 +11,7 @@ public class TestAVL {
 		tree.add(new Node(2));
 		tree.add(new Node(3));
 		tree.add(new Node(4));
-		tree.add(new Node(5));
-		tree.add(new Node(6));
-		tree.add(new Node(7));
-		tree.add(new Node(8));
-		
+		tree.balanceTree();
 		JFrameTree frameTree = new JFrameTree(tree.getRoot());
 		frameTree.setVisible(true);
 	}

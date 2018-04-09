@@ -31,6 +31,68 @@ public class Tree {
 		else
 			throw new NullPointerException("El nodo con la información especificada ya se encuentra");
 	}
+	
+	public void balanceTree() {
+		if(root.getBalanceFactor() < -1) {
+			balanceLL(root);
+		}else if(root.getBalanceFactor() > 1) {
+			balanceRR(root);
+		}
+	}
+	
+	public void balanceRR(Node nodeToBalance) {
+		changeRightRR(nodeToBalance);
+		changeLeftRR(nodeToBalance);
+	}
+	
+	private void changeLeftRR(Node nodeToBalance) {
+		while(nodeToBalance.getLeft().getLeft() != null) {
+			nodeToBalance.setInfo(nodeToBalance.getLeft().getInfo());
+			nodeToBalance = nodeToBalance.getLeft();
+		}
+		nodeToBalance.setInfo(nodeToBalance.getLeft().getInfo());
+		nodeToBalance.setLeft(null);
+	}
+	
+	private void changeRightRR(Node nodeToBalance) {
+		int infoAux = nodeToBalance.getInfo();
+		while(nodeToBalance.getRight() != null) {
+			infoAux = nodeToBalance.getRight().getInfo();
+			nodeToBalance.getRight().setInfo(nodeToBalance.getInfo());
+			if(nodeToBalance.getRight().getRight() != null)
+				nodeToBalance.getRight().getRight().setInfo(infoAux);
+			nodeToBalance = nodeToBalance.getRight();
+		}
+		nodeToBalance.setRight(new Node(infoAux));
+	}
+	
+	
+
+	public void balanceLL(Node nodeToBalance) {
+		changeLeftLL(nodeToBalance);
+		changeRightLL(nodeToBalance);
+	}
+	
+	private void changeLeftLL(Node nodeToBalance) {
+		int infoAux = nodeToBalance.getInfo();
+		while(nodeToBalance.getLeft() != null) {
+			infoAux = nodeToBalance.getLeft().getInfo();
+			nodeToBalance.getLeft().setInfo(nodeToBalance.getInfo());
+			if(nodeToBalance.getLeft().getLeft() != null)
+				nodeToBalance.getLeft().getLeft().setInfo(infoAux);
+			nodeToBalance = nodeToBalance.getLeft();
+		}
+		nodeToBalance.setLeft(new Node(infoAux));
+	}
+
+	private void changeRightLL(Node nodeToBalance) {
+		while(nodeToBalance.getRight().getRight() != null) {
+			nodeToBalance.setInfo(nodeToBalance.getRight().getInfo());
+			nodeToBalance = nodeToBalance.getRight();
+		}
+		nodeToBalance.setInfo(nodeToBalance.getRight().getInfo());
+		nodeToBalance.setRight(null);
+	}
 
 	/**
 	 * @return the root

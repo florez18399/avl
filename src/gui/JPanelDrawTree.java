@@ -36,7 +36,7 @@ public class JPanelDrawTree extends JPanel{
 	public void paint(Graphics g) {
 		super.paint(g);
 		if(root != null) {
-			paintTree(root, getWidth()/3, 50, getWidth()/2, g);
+			paintTree(root, getWidth()/2, 50, getWidth()/2, g);
 		}
 	}
 
@@ -58,4 +58,5 @@ public class JPanelDrawTree extends JPanel{
 			paintTree(actual.getRight(), x + total, y + 75, total, g);
 		}
 	}
+	
 }
