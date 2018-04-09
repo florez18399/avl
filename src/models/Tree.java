@@ -9,24 +9,27 @@ public class Tree {
 
 	public Tree() {
 	}
-	
-	/**
-	 * Calcula la altura de un árbol o de una rama
-	 * @param rootTree Raíz del árbol
-	 * @param count Contador necesario para recursividad
-	 * @return
-	 */
-	public int calculateHeightTree(Node rootTree, int count) {
-		count ++;
-		int heightLeft = 0;
-		int heightRight = 0;
-		if(rootTree.getLeft() != null) {
-			heightLeft = calculateHeightTree(rootTree.getLeft(), count);
-		}
-		if(rootTree.getRight() != null) {
-			heightLeft = calculateHeightTree(rootTree.getLeft(), count);
-		}
-		return heightLeft > heightRight ? heightLeft : heightRight;
+
+	public void add(Node node) {
+		if (root != null)
+			add(root, node);
+		else
+			root = node;
+	}
+
+	private void add(Node actual, Node node) {
+		if (actual.getInfo() < node.getInfo())
+			if (actual.getRight() != null)
+				add(actual.getRight(), node);
+			else
+				actual.setRight(node);
+		else if (actual.getInfo() > node.getInfo())
+			if (actual.getLeft() != null)
+				add(actual.getLeft(), node);
+			else
+				actual.setLeft(node);
+		else
+			throw new NullPointerException("El nodo con la información especificada ya se encuentra");
 	}
 
 	/**
