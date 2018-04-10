@@ -32,13 +32,16 @@ public class Tree {
 			throw new NullPointerException("El nodo con la información especificada ya se encuentra");
 	}
 
+	/**
+	 * Método que balancea un árbol
+	 */
 	public void balanceTree() {
 		if (root.getBalanceFactor() < -1) {
 			if (root.getRight().getLeft() != null)
 				balanceRR(root.getRight());
 			balanceLL(root);
 		} else if (root.getBalanceFactor() > 1) {
-			if (root.getLeft().getRight() != null) 
+			if (root.getLeft().getRight() != null)
 				balanceLL(root.getLeft());
 			balanceRR(root);
 		}
@@ -94,6 +97,90 @@ public class Tree {
 		}
 		nodeToBalance.setInfo(nodeToBalance.getRight().getInfo());
 		nodeToBalance.setRight(null);
+	}
+
+	/**
+	 * Eliminar nodo
+	 * @param info
+	 */
+	public void delete(int info) {
+		delete(null, root, info);
+	}
+
+	public void delete(Node father, Node actual, int info) {
+		if (actual.getInfo() == info) {
+			if (isComplete(actual)) {
+				deleteComplete(actual);
+			} else if (hasOneChildren(actual)) {
+				deleteOneChild(father, actual);
+			} else {
+				deleteLeaf(father, actual);
+			}
+		} else {
+			if (info < actual.getInfo()) {
+				delete(actual, actual.getLeft(), info);
+			} else {
+				delete(actual, actual.getRight(), info);
+			}
+		}
+	}
+
+	private void deleteComplete(Node actual) {
+		Node maxLeft = getMaxNode(actual.getLeft());
+		Node minRight = getMinNode(actual.getRight());
+		int data = (Math.abs(maxLeft.getInfo() - actual.getInfo()) < Math.abs(minRight.getInfo() - actual.getInfo()))
+				? maxLeft.getInfo()
+				: minRight.getInfo();
+		delete(data);
+		actual.setInfo(data);
+	}
+
+	public Node getMinNode(Node base) {
+		Node actual = base;
+		while (actual.getLeft() != null) {
+			actual = actual.getLeft();
+		}
+		return actual;
+	}
+
+	public Node getMaxNode(Node base) {
+		Node actual = base;
+		while (actual.getRight() != null) {
+			actual = actual.getRight();
+		}
+		return actual;
+	}
+
+	private void deleteOneChild(Node father, Node actual) {
+		if (actual == root) {
+			root = getOneChild(actual);
+		} else if (father.getLeft().equals(actual)) {
+			father.setLeft(getOneChild(actual));
+		} else {
+			father.setRight(getOneChild(actual));
+		}
+	}
+
+	private void deleteLeaf(Node father, Node actual) {
+		if (father == null) {
+			root = null;
+		} else if (father.getLeft() != null && father.getLeft().equals(actual)) {
+			father.setLeft(null);
+		} else {
+			father.setRight(null);
+		}
+	}
+
+	private Node getOneChild(Node actual) {
+		return actual.getLeft() != null ? actual.getLeft() : actual.getRight();
+	}
+
+	private boolean hasOneChildren(Node actual) {
+		return actual.getLeft() != null || actual.getRight() != null;
+	}
+
+	private boolean isComplete(Node actual) {
+		return actual.getLeft() != null && actual.getRight() != null;
 	}
 
 	/**

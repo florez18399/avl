@@ -41,6 +41,7 @@ public class JFrameTree extends JFrame {
 		JMenu menu = new JMenu("Árbol");
 		menu.add(createJITem("Agregar", "ADD", KeyEvent.VK_A));
 		menu.add(createJITem("Balancear", "BALANCE", KeyEvent.VK_B));
+		menu.add(createJITem("Eliminar", "REMOVE", KeyEvent.VK_R));
 		menuBar.add(menu);
 		setJMenuBar(menuBar);
 	}

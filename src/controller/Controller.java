@@ -42,6 +42,12 @@ public class Controller implements ActionListener{
 			tree.add(new Node(number));
 			frameTree.repaintTree(tree.getRoot());
 			break;
+			
+		case "REMOVE":
+			int number2 = Integer.parseInt(JOptionPane.showInputDialog(frameTree, "Ingresa el número"));
+			tree.delete(number2);
+			frameTree.repaintTree(tree.getRoot());
+			break;
 
 		default:
 			break;
